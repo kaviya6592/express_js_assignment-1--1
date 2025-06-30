@@ -1,0 +1,21 @@
+*{
+    
+    box-sizing: border-box;
+}
+
+header{
+background-color: aqua;
+
+}
+.container{
+    background-color: rgb(44, 168, 168);
+}
+
+.container1{
+    background-color: #a8602c;
+}
+
+
+.container2{
+    background-color: rgb(44, 168, 61);
+}
