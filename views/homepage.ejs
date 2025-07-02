@@ -5,8 +5,36 @@
 <title></title>
 <body>
      <%- include('header') %>
+
  <div class="container">   
 <h1>hallo ejs</h1>
+
+<div>
+  <form action="/add-user" method="POST">
+  <input name="username" type="text">
+  <input name="email" type="text">
+  <button>add</button>
+  </form>
+</div>
+
+<% if( data.length >0) { %>
+    <ul>
+<% data.forEach(data =>{ %>
+<li><%= data.username %> - <%= data.email %></li>
+
+<form method="post" action="/delete-user/<%= data._id %>" >
+<button>delete</button>
+</form>
+<form method="post" action="/update-user/<%= data._id %>" >
+<button>edit</button>
+</form>
+
+
+<% }) %>
+<% } %>
+   </ul>
+
+
 
 
 </div>
