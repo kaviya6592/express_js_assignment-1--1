@@ -4,35 +4,60 @@
 </head>
 <title></title>
 <body>
-     <%- include('header') %>
+   
 
  <div class="container">   
-<h1>hallo ejs</h1>
+<h1>home page</h1>
 
 <div>
-  <form action="/add-user" method="POST">
-  <input name="username" type="text">
-  <input name="email" type="text">
-  <button>add</button>
+  <form action="/add-post" method="POST">
+  <input name="body" type="text">
+  
+  <button>add post</button>
   </form>
 </div>
 
 <% if( data.length >0) { %>
     <ul>
 <% data.forEach(data =>{ %>
-<li><%= data.username %> - <%= data.email %></li>
+<li><%= data.body %> </li>
 
-<form method="post" action="/delete-user/<%= data._id %>" >
-<button>delete</button>
+
+<form method="post" action="/delete-post/<%= data._id %>" >
+<button>delete post</button>
 </form>
-<form method="post" action="/update-user/<%= data._id %>" >
-<button>edit</button>
+
+
+
+<form method="POST" action="/add-comment/<%= data._id %>" >
+<input name="comment" type="text">
+<input type="hidden" value="<%= data._id %>" name="post_id">
+<button>add comment</button>
 </form>
+
+<% if (data.comments.length >0) { %>
+  <ul>
+  <% data.comments.forEach(comment =>{ %>
+  <li>  <%= comment.body %></li>
+    <form method="POST" action="/delete-comment/<%= comment._id %>/<%= data._id %>" >
+    <button>delete comment</button>
+    </form>
+
+
+  <% }) %>
+<% } %>
+
+</ul>
 
 
 <% }) %>
 <% } %>
    </ul>
+
+
+
+
+
 
 
 
