@@ -22,7 +22,7 @@
 <% data.forEach(data =>{ %>
 <li><%= data.body %> </li>
 
-
+<a href="/edit-post/<%= data._id %>">edit post</a>
 <form method="post" action="/delete-post/<%= data._id %>" >
 <button>delete post</button>
 </form>

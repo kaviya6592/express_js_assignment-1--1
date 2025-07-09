@@ -1,47 +1,22 @@
-
 const comment_model=require("../models/comment_model")
 const post_model = require("../models/post_model")
 
 const homepage=(req,res)=>{
-    //res.send("home page")
-    //render send to homepage ejs
-    // get data from db
-    post_model.find()
-    .populate("comments","_id body")
-    .then(result=>{
-     //console.log("post info"+result)
-    res.render("homepage",{
-     
-      data:result,
-      error:" "
-     })
-    })
- 
-    .catch((err)=>{
-      console.log(err)
-
-    })
     
-}
+   // get all post from db
+   const post= post_model.find().populate("comments","_id body");
+   res.json(post)
+    
+    
+};
 
 const addpost=(req,res)=>{
 
   let newuser=new post_model(req.body)
   console.log(newuser)
   newuser.save()
-  .then(()=>{
-    res.redirect('/')
-    //console.log("db saved")
-    })
-
-  .catch((err)=>{
-    res.send(err)
-  })
-  
-
-}
-
-
+  res.status(201).json(newuser)
+};
 
 
 
@@ -49,57 +24,34 @@ const addpost=(req,res)=>{
 const del_post=(req,res)=>{
   console.log(req.params.id);
   post_model.findByIdAndDelete(req.params.id)
-  .then(()=>{
-    res.redirect('/')
-  })
-  .catch((err)=>{
-    res.send(err)
-  })
-  
+  res.json({message:"post deleted"});
 
-}
+};
 
 
 
 const editpage=(req,res)=>{
   
   const id=req.params.id;
-  post_model.findById(id)
-  .then(result=>{res.render("editpage",{
-    post:result,
-    error:" "
-  })
-})
-  .catch((err)=>{
-    res.send(err)
-  })
+  const result=post_model.findById(id)
+  res.json(result)
   
 
-}
+};
 
 const editpost=(req,res)=>{
   
   const id=req.params.id;
   console.log("postid"+id)
-  post_model.findByIdAndUpdate(id,{body:req.body.body})
-  .then(result=>{res.redirect("/")})
-
-  .catch((err)=>{res.send(err) })
-}
+ const updated= post_model.findByIdAndUpdate(id,{body:req.body.body})
+  res.json(updated)
+};
   
 
     
 
 
   
-
-
-
-
-
-
-
-
 
 
 
@@ -134,18 +86,18 @@ const addcomment=(req,res)=>{
                                     })
         
                               .catch(err=>{
-                                 onsole.log(err)
+                                 res.status(500).json({ error: 'Failed to add comment.' });
                               })
            })         
 
                 .catch(err=>{
-                    console.log(err)
+                   res.status(500).json({ error: 'Failed to add comment.' });
                        })         
      })
       
     .catch(err=>{
-      console.log(err)
-
+     
+res.status(500).json({ error: 'Failed to add comment.' });
     })
     
   
@@ -168,25 +120,14 @@ const deletecomment=(req,res)=>{
   const commentId = req.params.comment_id;
   const postId = req.params.id;
 
-//console.log(commentId+postId)
+console.log(commentId+postId)
   comment_model.findByIdAndDelete(commentId)
-  .then((data)=>{
-    //res.send("comment delete from comment model")
-    res.redirect("/")
-
-  })
-
-  .catch(err=>{
-        console.log(err)
-      })
-
-    }  
-    
-
+  res.json({message:"comment deleted"})
+};
 
 const notFoundPage = (req,res) => {
-  res.send('404, Page not found');
-}
+  res.status(404).json({ err: 'Page not found'});
+};
 
 
 

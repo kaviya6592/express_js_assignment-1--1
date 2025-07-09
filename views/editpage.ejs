@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<head>
+  <%- include('head') %>
+</head>
+<title></title>
+<body>
+   <h2>edit -- page <h2>
+    <form method="post" action="/edit-post-text/<%= post._id %>">
+        <textarea name ="body">post:<%=post.body%></textarea>
+        <button>edit</button>
+    </form>
+    
+   </body>
+   </html>

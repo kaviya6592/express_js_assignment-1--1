@@ -8,6 +8,13 @@ route.post('/add-post',controller_file.addpost);
 
 route.post('/delete-post/:id',controller_file.del_post);
 
+route.get('/edit-post/:id',controller_file.editpage);
+
+
+route.post('/edit-post-text/:id',controller_file.editpost);
+
+
+
 route.post('/add-comment/:id',controller_file.addcomment);
 
 route.post('/delete-comment/:comment_id/:id',controller_file.deletecomment);
